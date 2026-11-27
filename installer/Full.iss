@@ -37,7 +37,7 @@ Compression=lzma2/fast
 SolidCompression=yes
 SetupIconFile=..\build_assets\app.ico
 OutputDir=..\release
-OutputBaseFilename=ZapretApp-1.0-BETA-Setup-r4
+OutputBaseFilename=ZapretApp-1.0-BETA-Setup-r5
 
 [Languages]
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
