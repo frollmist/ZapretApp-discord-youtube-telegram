@@ -23,7 +23,7 @@ with tempfile.TemporaryDirectory() as directory:
     assert APP_NAME == 'ZapretApp-discord-youtube-telegram'
     assert DATA_NAME == 'ZapretTG'
     assert window.windowTitle() == APP_NAME
-    assert any(item.text() == APP_NAME and item.wordWrap() for item in window.findChildren(QLabel))
+    assert window.rail.findChild(QLabel, 'brandName').text() == 'ZapretApp'
     assert any(APP_NAME in item.text() for item in window.pages['settings'].findChildren(QLabel))
     window.go('settings', animate=False)
     window.set_language('en')

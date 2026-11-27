@@ -134,7 +134,7 @@ class EnglishUITests(unittest.TestCase):
                     dlg.deleteLater()
 
     def test_dashboard_mark_has_clear_background_and_keyhole(self):
-        mark = self.window.pages['home'].findChild(QLabel, 'dashboardLogo').pixmap().toImage()
+        mark = self.window.rail.findChild(QLabel, 'dashboardLogo').pixmap().toImage()
         self.assertFalse(mark.isNull())
         def alpha(x, y):
             return mark.pixelColor(round(mark.width() * x), round(mark.height() * y)).alpha()
@@ -298,11 +298,15 @@ class EnglishUITests(unittest.TestCase):
                          'stats': {'active': 5, 'up': '5KB', 'down': '10KB', 'up_raw': 5, 'down_raw': 10}},
                         {'enabled': False})
         home = w.pages['home']
-        self.assertIn('running 2 min', home.m_z.sub.text())
+        self.assertIn('running 2 min', home.m_z.status.text())
         self.assertNotRegex(home.m_t.sub.text(), r'[А-Яа-яЁё]')
-        self.assertEqual(home.r_z.text, 'ON')
-        self.assertEqual(home.emblem.layers[2]['sub'], 'off')
-        self.assertEqual(home.bar_conn.title, 'TG connections')
+        self.assertTrue(home.m_z.switch.isChecked())
+        self.assertTrue(home.m_t.property('active'))
+        self.assertFalse(home.m_d.switch.isChecked())
+        self.assertEqual(home.m_d.status.text(), 'off')
+        for section, card in home.modules.items():
+            card.details.click()
+            self.assertEqual(w._current, section)
         dialog = ConfirmDialog(w.pages['diag'], 'Кэш Discord', 'Закрыть Discord и очистить его кэш?', ok='Очистить')
         texts = [item.text() for cls in (QLabel, QAbstractButton) for item in dialog.findChildren(cls)]
         self.assertIn('Discord cache', texts)
