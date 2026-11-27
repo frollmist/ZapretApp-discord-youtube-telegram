@@ -18,7 +18,7 @@
    .\installer\BuildFull.ps1 -TelegramBinary "$env:USERPROFILE\Downloads\TgWsProxy_windows.exe" -Python ".\.venv\Scripts\python.exe" -Compiler "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
    ```
 
-Установщик появится в `release/ZapretApp-1.0-BETA-Setup-r4.exe`.
+Установщик появится в `release/ZapretApp-1.0-BETA-Setup-r5.exe`.
 
 ## Проверка интерфейса и компонентов
 
