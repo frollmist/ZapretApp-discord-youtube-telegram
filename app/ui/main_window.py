@@ -6,13 +6,13 @@ import time
 from typing import Dict, Optional
 
 from PySide6.QtCore import QEasingCurve, QPoint, QPointF, QPropertyAnimation, QRectF, QSize, Qt, QTimer
-from PySide6.QtGui import QAction, QActionGroup, QColor, QCursor, QPainter, QPainterPath, QRadialGradient
+from PySide6.QtGui import QAction, QActionGroup, QColor, QCursor, QIcon, QPainter, QPainterPath, QRadialGradient
 from PySide6.QtWidgets import (QApplication, QButtonGroup, QFrame, QGraphicsOpacityEffect, QHBoxLayout, QLabel,
                                QMainWindow, QMenu, QPushButton, QStackedWidget, QSystemTrayIcon, QToolButton,
                                QVBoxLayout, QWidget)
 
 from .. import winutils
-from ..paths import APP_NAME, APP_VERSION, DATA_DIR, UI_CACHE_DIR
+from ..paths import APP_NAME, APP_VERSION, DATA_DIR, RESOURCE_DIR, UI_CACHE_DIR
 from . import icons, window_fx
 from .fancy import C, style_popup
 from .page_dns import DnsPage
@@ -61,8 +61,7 @@ class Shell(QWidget):
         alpha = 0.80 if (self.blur and translucent) else 0.985
         p.fillPath(path, QColor(rgb[0], rgb[1], rgb[2], int(255 * alpha)))
         p.setClipPath(path)
-        # световые пятна как на референсе (пурпур справа сверху, фиолет слева снизу)
-        for (fx, fy, key, a) in ((0.92, 0.0, "accent", 0.16), (0.0, 1.0, "accent2", 0.13), (0.55, 0.62, "accent3", 0.04)):
+        for (fx, fy, key, a) in ((0.28, -0.08, "glow_left", 0.95), (0.95, -0.15, "glow_right", 0.9)):
             g = QRadialGradient(QPointF(r.width() * fx, r.height() * fy), max(r.width(), r.height()) * 0.55)
             c = C(key)
             c.setAlphaF(a)
@@ -121,7 +120,7 @@ class TitleBar(QWidget):
         super().__init__()
         self.win = win
         self.setObjectName("titleBar")
-        self.setFixedHeight(64)
+        self.setFixedHeight(82)
         lay = QHBoxLayout(self)
         lay.setContentsMargins(26, 14, 10, 0)
         lay.setSpacing(6)
@@ -239,17 +238,18 @@ class MainWindow(QMainWindow):
         rv = QVBoxLayout(self.rail)
         rv.setContentsMargins(10, 18, 10, 14)
         rv.setSpacing(6)
+        brand_row = QHBoxLayout()
+        brand_row.setContentsMargins(4, 0, 0, 0)
+        brand_row.setSpacing(6)
         logo = QLabel()
-        px = icons.app_pixmap(84, "on")
-        px.setDevicePixelRatio(2)
-        logo.setPixmap(px)
-        logo.setAlignment(Qt.AlignHCenter)
+        logo.setObjectName("dashboardLogo")
+        mark = QIcon(str(RESOURCE_DIR / "dashboard-lock.svg"))
+        logo.setPixmap(mark.pixmap(QSize(34, 34), max(3.0, self.devicePixelRatioF())))
         logo.setToolTip(f"{APP_NAME} {APP_VERSION}")
-        rv.addWidget(logo, 0, Qt.AlignHCenter)
-        brand = label(APP_NAME, "tiny", wrap=True)
-        brand.setMaximumWidth(145)
-        brand.setAlignment(Qt.AlignHCenter)
-        rv.addWidget(brand)
+        brand_row.addWidget(logo)
+        brand_row.addWidget(label("ZapretApp", "brandName"))
+        brand_row.addStretch()
+        rv.addLayout(brand_row)
         rv.addSpacing(20)
         self.nav_group = QButtonGroup(self)
         self.nav_buttons: Dict[str, QToolButton] = {}
@@ -330,9 +330,9 @@ class MainWindow(QMainWindow):
         try:
             d = UI_CACHE_DIR
             d.mkdir(parents=True, exist_ok=True)
-            fa, fc = d / f"arrow_{name}.png", d / "check.png"
+            fa, fc = d / f"arrow_{name}.png", d / f"check_{name}.png"
             icons.pixmap("chevron", pal["muted"], 12, 2.2).save(str(fa))
-            icons.pixmap("check", "#ffffff", 14, 2.6).save(str(fc))
+            icons.pixmap("check", pal["accent_ink"], 14, 2.6).save(str(fc))
             arrow, check = str(fa).replace("\\", "/"), str(fc).replace("\\", "/")
         except Exception:
             pass
@@ -352,6 +352,10 @@ class MainWindow(QMainWindow):
         self.apply_theme(name)
         self.apply_backdrop()
         self._paint_icons()
+        for btn in self.findChildren(QPushButton):
+            if icon_name := btn.property("buttonIcon"):
+                color = Palette.p["accent_ink" if btn.objectName() == "primary" else "muted"]
+                btn.setIcon(icons.icon(icon_name, color, 16))
         for p in self.pages.values():
             p.update()
         self.shell.update()
@@ -420,6 +424,7 @@ class MainWindow(QMainWindow):
         page = self.pages[key]
         self.titlebar.title.setText(page.title)
         self.titlebar.sub.setText(page.subtitle)
+        self.titlebar.sub.setVisible(bool(page.subtitle))
         self.stack.setCurrentWidget(page)
         self._paint_icons()
         page.on_show()
@@ -527,10 +532,6 @@ class MainWindow(QMainWindow):
             self.pages[self._current].on_status(zs, ts, ds)
             if self.cfg.get("app", "language", "ru") == "en":
                 apply_language(self.pages[self._current], "en")
-            if self._current != "home":
-                self.pages["home"].feed_speed(ts)
-        else:
-            self.pages["home"].feed_speed(ts)
         if not self.isVisible() and self.cfg.get("app", "notifications", True):
             if prev_z.get("running") and not z_on and zs.get("error"):
                 error = translate_text(str(zs["error"]).split("\n")[0], 'en' if en else 'ru')

@@ -7,6 +7,9 @@ from PySide6.QtGui import QAction
 from PySide6.QtWidgets import QAbstractButton, QComboBox, QLabel, QLineEdit, QSpinBox, QTabWidget, QWidget
 
 EN = {
+    'Центр связи': 'Connection center', 'Локальный прокси': 'Local proxy',
+    'Discord и YouTube': 'Discord and YouTube', 'Настроить Telegram': 'Set up Telegram',
+    'Быстрые действия': 'Quick actions',
     'Проверить связь': 'Check connectivity', 'Доступность сайтов': 'Website availability',
     'Ещё не проверялось': 'Not checked yet', 'Проверяем…': 'Checking…',
     'Доступен': 'Available', 'Недоступен': 'Unavailable', 'Нет ответа': 'No response',

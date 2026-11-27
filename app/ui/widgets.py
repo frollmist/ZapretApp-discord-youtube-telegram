@@ -138,7 +138,8 @@ def button(text: str, obj: str = "", icon_name: str = "", on_click: Optional[Cal
     if obj:
         b.setObjectName(obj)
     if icon_name:
-        color = "#ffffff" if obj == "primary" else Palette.p.get("muted", "#8e96a8")
+        b.setProperty("buttonIcon", icon_name)
+        color = Palette.p.get("accent_ink", "#ffffff") if obj == "primary" else Palette.p.get("muted", "#8e96a8")
         b.setIcon(icons.icon(icon_name, color, 16))
         b.setIconSize(QSize(16, 16))
     b.setCursor(Qt.PointingHandCursor)

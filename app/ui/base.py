@@ -38,7 +38,6 @@ class Page(QWidget):
         outer.setSpacing(0)
         inner = QWidget()
         self.inner = inner
-        inner.setAttribute(Qt.WA_TranslucentBackground)
         self.body = QVBoxLayout(inner)
         self.body.setContentsMargins(26, 12, 22, 24)
         self.body.setSpacing(14)
@@ -51,6 +50,7 @@ class Page(QWidget):
             sa.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
             sa.viewport().setAutoFillBackground(False)
             sa.setWidget(inner)
+            inner.setAutoFillBackground(False)
             outer.addWidget(sa)
             self.scroll = sa
         else:

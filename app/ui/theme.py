@@ -1,68 +1,72 @@
-"""Цвета и стили интерфейса (полупрозрачный «неоновый» стиль)."""
+"""Shared colour palettes and Qt styles for the desktop interface."""
 from __future__ import annotations
 
 PALETTES = {
     "dark": {
-        "window": (13, 20, 39),          # тёмно-синий фон
-        "bg": "transparent",
-        "rail": "rgba(10,16,31,0.70)",
-        "surface": "rgba(31,42,68,0.68)",
-        "surface_solid": "#202b46",
-        "surface2": "rgba(255,255,255,0.045)",
-        "surface3": "rgba(255,255,255,0.08)",
-        "border": "rgba(255,255,255,0.07)",
-        "border_strong": "rgba(255,255,255,0.13)",
-        "text": "#eef0ff",
-        "muted": "#8b90b2",
-        "faint": "#5f6488",
-        "accent": "#889dff",
-        "accent2": "#727bdf",
-        "accent3": "#69a9f4",
-        "accent_hover": "#a7b5ff",
-        "accent_soft": "rgba(136,157,255,0.16)",
-        "on": "#2ee6a8",
-        "on_soft": "rgba(46,230,168,0.14)",
-        "warn": "#ffc14d",
-        "warn_soft": "rgba(255,193,77,0.15)",
-        "err": "#ff5c7a",
-        "err_soft": "rgba(255,92,122,0.15)",
-        "input": "rgba(10,11,22,0.55)",
-        "knob": "#ffffff",
-        "track_off": "#3a3e60",
-        "disc_off_top": "#3a3d5c",
-        "disc_off_side": "#25273f",
-        "menu": "#202339",
+        "window": (23, 19, 41),
+        "rail": "#1d182f",
+        "surface": "#29233d",
+        "surface_solid": "#29233d",
+        "surface2": "#272137",
+        "surface3": "#352d46",
+        "border": "#4b405f",
+        "border_strong": "#6b5d83",
+        "text": "#f6f1ff",
+        "muted": "#c3b8d1",
+        "faint": "#a89bb8",
+        "accent": "#c5a9ff",
+        "accent2": "#a78cde",
+        "accent3": "#94c8dc",
+        "accent_hover": "#dbcaff",
+        "accent_soft": "#3d304f",
+        "accent_ink": "#211330",
+        "glow_left": "#534174",
+        "glow_right": "#395365",
+        "on": "#9aecd2",
+        "on_soft": "#2a413d",
+        "warn": "#ffcc82",
+        "warn_soft": "#453626",
+        "err": "#ff9cb0",
+        "err_soft": "#492e40",
+        "input": "#211c32",
+        "knob": "#fffaff",
+        "track_off": "#61566f",
+        "disc_off_top": "#3e344e",
+        "disc_off_side": "#292232",
+        "menu": "#29233d",
     },
     "light": {
-        "window": (246, 246, 252),
-        "bg": "transparent",
-        "rail": "rgba(255,255,255,0.55)",
-        "surface": "rgba(255,255,255,0.72)",
-        "surface_solid": "#ffffff",
-        "surface2": "rgba(20,20,60,0.04)",
-        "surface3": "rgba(20,20,60,0.08)",
-        "border": "rgba(20,20,60,0.08)",
-        "border_strong": "rgba(20,20,60,0.16)",
-        "text": "#171933",
-        "muted": "#5d6185",
-        "faint": "#9a9dba",
-        "accent": "#a62fd6",
-        "accent2": "#6a3df0",
-        "accent3": "#10b9ab",
-        "accent_hover": "#b844e6",
-        "accent_soft": "rgba(166,47,214,0.12)",
-        "on": "#12a978",
-        "on_soft": "rgba(18,169,120,0.12)",
-        "warn": "#c88a00",
-        "warn_soft": "rgba(200,138,0,0.12)",
-        "err": "#e03a5a",
-        "err_soft": "rgba(224,58,90,0.10)",
-        "input": "rgba(255,255,255,0.8)",
+        "window": (241, 238, 248),
+        "rail": "#f8f5fc",
+        "surface": "#fffaff",
+        "surface_solid": "#fffaff",
+        "surface2": "#f2edf8",
+        "surface3": "#ebe3f3",
+        "border": "#d3c7df",
+        "border_strong": "#ab99bc",
+        "text": "#2c213c",
+        "muted": "#62566e",
+        "faint": "#73667c",
+        "accent": "#684095",
+        "accent2": "#764e9f",
+        "accent3": "#396c83",
+        "accent_hover": "#583584",
+        "accent_soft": "#ede2fa",
+        "accent_ink": "#ffffff",
+        "glow_left": "#dbc9f4",
+        "glow_right": "#c4e3e7",
+        "on": "#116b58",
+        "on_soft": "#dcefe7",
+        "warn": "#885c13",
+        "warn_soft": "#f7ead3",
+        "err": "#a13957",
+        "err_soft": "#f9e0e6",
+        "input": "#f2edf8",
         "knob": "#ffffff",
-        "track_off": "#c9cbe0",
-        "disc_off_top": "#dcdcec",
-        "disc_off_side": "#c4c5da",
-        "menu": "#ffffff",
+        "track_off": "#94869f",
+        "disc_off_top": "#e2d8ed",
+        "disc_off_side": "#cdc1da",
+        "menu": "#fffaff",
     },
 }
 
@@ -96,7 +100,8 @@ QToolButton#railBtn {{
 QToolButton#railBtn:hover {{ background: {p['surface2']}; color: {p['muted']}; }}
 QToolButton#railBtn:checked {{ background: {p['accent_soft']}; color: {p['text']}; }}
 #titleBar {{ background: transparent; }}
-#titleText {{ font-family: {DISPLAY}; font-size: 20px; font-weight: 700; }}
+#titleText {{ font-family: {DISPLAY}; font-size: 28px; font-weight: 600; }}
+#brandName {{ font-size: 18px; font-weight: 650; }}
 #titleSub {{ color: {p['muted']}; font-size: 12px; }}
 QPushButton#winBtn {{ background: transparent; border: none; border-radius: 8px; padding: 0; }}
 QPushButton#winBtn:hover {{ background: {p['surface3']}; }}
@@ -104,7 +109,13 @@ QPushButton#winClose {{ background: transparent; border: none; border-radius: 8p
 QPushButton#winClose:hover {{ background: #e8455f; }}
 
 /* --- карточки и тексты --- */
-#card {{ background: {p['surface']}; border: 1px solid {p['border']}; border-radius: 18px; }}
+#card, #moduleCard {{ background: {p['surface']}; border: 1px solid {p['border']}; border-radius: 15px; }}
+#moduleCard[active="true"] {{ background: {p['accent_soft']}; border-color: {p['accent']}; }}
+#moduleTitle {{ font-size: 18px; font-weight: 650; }}
+#moduleStatus {{ color: {p['muted']}; font-size: 12px; }}
+#moduleCard[active="true"] #moduleStatus {{ color: {p['on']}; }}
+QPushButton#moduleLink {{ color: {p['accent']}; background: transparent; border: none; padding: 0; font-size: 20px; }}
+QPushButton#moduleLink:hover, QPushButton#moduleLink:focus {{ background: {p['surface3']}; }}
 #cardTitle {{ font-size: 15px; font-weight: 650; }}
 #sectionTitle {{ font-size: 14px; font-weight: 650; }}
 #heroTitle {{ font-family: {DISPLAY}; font-size: 24px; font-weight: 700; }}
@@ -139,11 +150,10 @@ QPushButton:hover {{ background: {p['border_strong']}; }}
 QPushButton:pressed {{ background: {p['surface2']}; }}
 QPushButton:disabled {{ color: {p['faint']}; }}
 QPushButton#primary {{
-    border: none; color: white; padding: 9px 18px;
-    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 {p['accent']}, stop:1 {p['accent2']});
+    border: none; color: {p['accent_ink']}; padding: 9px 18px; background: {p['accent']};
 }}
 QPushButton#primary:hover {{
-    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 {p['accent_hover']}, stop:1 {p['accent2']});
+    background: {p['accent_hover']};
 }}
 QPushButton#primary:disabled {{ background: {p['surface3']}; color: {p['faint']}; }}
 QPushButton#danger {{ color: {p['err']}; }}
@@ -164,14 +174,14 @@ QPushButton#seg:hover {{ color: {p['text']}; }}
 QPushButton#seg[first="true"] {{ border-top-left-radius: 10px; border-bottom-left-radius: 10px; }}
 QPushButton#seg[last="true"] {{ border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-right: 1px solid {p['border']}; }}
 QPushButton#seg:checked {{
-    color: white; border-color: transparent;
+    color: {p['accent_ink']}; border-color: transparent;
     background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 {p['accent']}, stop:1 {p['accent2']});
 }}
 
 /* --- поля ввода --- */
 QLineEdit, QPlainTextEdit, QSpinBox, QComboBox {{
     background: {p['input']}; border: 1px solid {p['border']}; border-radius: 10px;
-    padding: 7px 10px; selection-background-color: {p['accent']}; selection-color: white;
+    padding: 7px 10px; selection-background-color: {p['accent']}; selection-color: {p['accent_ink']};
     min-height: 20px;
 }}
 QPlainTextEdit {{ padding: 6px; }}
